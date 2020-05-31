@@ -1,0 +1,1 @@
+g++ hwnd_chr.c -static -o hwnd_chr.exe
