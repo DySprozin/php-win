@@ -11,8 +11,8 @@ if ($handle == 0) {
 echo "\r\nHANDLE IS FOUND! OK!";
 
 while (true) {
- $g = glob("C:/Users/Админ/Desktop/1.03 H/Хроматограммы/*.crm");
- $local_chr = glob("chr_orig/*.crm");
+ $g = glob("C:/Program Files (x86)/Цвет-Аналитик/ 1.03 H/Хроматограммы/_*.crm");
+ $local_chr = glob("chr_orig/_*.crm");
  foreach ($g as $value) {
  	if (!in_array('chr_orig/' . basename($value), $local_chr)) {
 			copy($value, 'chr_orig/' . basename($value));
@@ -61,17 +61,20 @@ function chrome($f) {
 	$i = 0;
 	$result = '';
 	foreach ($res_arr as $value) {
-		 $i++;
-			$value = $value + $min;
-			$value = str_replace(".", ",", $value);
- 	 $result .= $i . ";" . ($value) . "\r\n";
+		$value = $value + $min;
+		$value = str_replace(".", ",", $value);
+		$result .= $i . ";" . ($value) . "\r\n";
+		$i++;
+
 	}
-	$ftmp = fopen($fout, "w+");
+ $ftmp = fopen($fout, "w+");
  fwrite($ftmp, $result);
  fclose($ftmp);
  $im = imagegrabwindow($handle);
  imagepng($im, $sout);
  imagedestroy($im);
 	unlink("tmp_chr.txt");
+	
+ system('cd "C:\G\php-win\MaxichromH\converted" && git add . && git commit . -m "add converted files" && git push');
 }
 ?>
