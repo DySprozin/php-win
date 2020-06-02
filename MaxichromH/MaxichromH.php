@@ -16,15 +16,19 @@ while (true) {
  foreach ($g as $value) {
  	if (!in_array('chr_orig/' . basename($value), $local_chr)) {
 			copy($value, 'chr_orig/' . basename($value));
+ $WshShell = new COM("WScript.Shell");
+ $WshShell->Popup("Копирование оригинального файла...", 1, "MaxichromH - Подождите, идет обработка...", 4096+1+48);
+
  		chrome($value);
  		break;
  	}
  }
-	sleep(10);
+	sleep(5);
 }
 
 function chrome($f) {
-	$handle = $GLOBALS['handle'];
+ $WshShell = new COM("WScript.Shell");
+ $handle = $GLOBALS['handle'];
  $file_name = $f;
  $fout = "./converted/" . basename($f) . ".csv";
  $sout = "./converted/" . basename($f) . ".png";
@@ -36,7 +40,7 @@ function chrome($f) {
  while (!@gzeof($file)) {
      fwrite($out_file, @gzread($file, 100));
  }
- 
+
  // Files are done, close files
  fclose($out_file);
  gzclose($file);
@@ -67,6 +71,10 @@ function chrome($f) {
 		$i++;
 
 	}
+	
+ $WshShell->Popup("Распаковка...", 1, "MaxichromH - Подождите, идет обработка...", 4096+1+64);
+
+	
  $ftmp = fopen($fout, "w+");
  fwrite($ftmp, $result);
  fclose($ftmp);
@@ -74,9 +82,9 @@ function chrome($f) {
  imagepng($im, $sout);
  imagedestroy($im);
 	unlink("tmp_chr.txt");
-	
+ $WshShell->Popup("Заливка на github...", 1, "MaxichromH - Подождите, идет обработка...", 4096+1+64);	
  system('cd "C:\G\php-win\MaxichromH\converted" && git add . && git commit . -m "add converted files" && git push');
  $WshShell = new COM("WScript.Shell");
- $WshShell->Popup("Успешно", 2, "MaxichromH", 4096);
+ $WshShell->Popup("Успешно!", 2, "MaxichromH", 4096+1+64);
 }
 ?>
