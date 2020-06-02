@@ -76,5 +76,7 @@ function chrome($f) {
 	unlink("tmp_chr.txt");
 	
  system('cd "C:\G\php-win\MaxichromH\converted" && git add . && git commit . -m "add converted files" && git push');
+ $WshShell = new COM("WScript.Shell");
+ $WshShell->Popup("Успешно", 1);
 }
 ?>
