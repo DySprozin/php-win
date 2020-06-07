@@ -1,2 +1,2 @@
-@cd "E:\Documents\php-win\diskspace"
-@".\php\php.exe" "diskspace.php"
+chcp 1251
+start "Ã≈—“Œ Õ¿ ƒ»— ≈" "cmd /c .\php\php.exe diskspace.php"
