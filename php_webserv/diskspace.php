@@ -1,7 +1,12 @@
 <?php
-
- echo '<meta http-equiv="refresh" content="5">';
-
+echo $_POST['zzz'];
+// echo '<meta http-equiv="refresh" content="5">';
+echo <<<TEST
+<form action="" method="post">
+<input type="text" name="zzz">
+<input type="submit">
+</form>
+TEST;
  $e_disk_free = disk_free_space("E:");
  $e_disk_all = disk_total_space("E:");
  $c_disk_free = disk_free_space("C:");
