@@ -24,6 +24,7 @@ while (true) {
  $local_chr = glob("chr_orig/_*.crm");
  foreach ($g as $value) {
  	if (!in_array('chr_orig/' . basename($value), $local_chr)) {
+		    $GLOBALS['origname'] = 'chr_orig/' . basename($value);
 			copy($value, 'chr_orig/' . basename($value));
  $WshShell = new COM("WScript.Shell");
  $WshShell->Popup("Копирование оригинального файла...", 1, "MaxichromH - Подождите, идет обработка...", 4096+48);
@@ -84,9 +85,18 @@ function chrome($f) {
  $WshShell->Popup("Распаковка...", 1, "MaxichromH - Подождите, идет обработка...", 4096+64);
 
 	
+
+ 
+ $passport = join('', file($GLOBALS['origname']));
+ $passport = explode("Tmp.$$$", $passport);
+ $passport = explode("\0", $passport[1]);
+ $passport = ';;' . trim(str_replace("\x1E", "\r\n;;", $passport[1]), ';;');
+
  $ftmp = fopen($fout, "w+");
- fwrite($ftmp, $result);
+ fwrite($ftmp, $passport . $result);
  fclose($ftmp);
+
+ 
  $im = imagegrabwindow($handle);
  imagepng($im, $sout);
  imagedestroy($im);
